@@ -1,0 +1,70 @@
+Use HR database for below queries
+1. WAQ to display second highest salary in HR schema.
+->postgres=#
+ select max(salary) from employees where salary<(select max(salary) from employees);
+   max
+----------
+ 17000.00
+(1 row)
+
+
+
+2.WAQ to display name of employee who is earning maximum in his/her department.
+
+
+postgres=# select department_id,first_name,salary from employees d where salary=(select max(salary) from employees where department_id=d.department_id);
+ department_id | first_name |  salary
+---------------+------------+----------
+            90 | Steven     | 24000.00
+            60 | Alexander  |  9000.00
+           100 | Nancy      | 12000.00
+            30 | Den        | 11000.00
+            50 | Adam       |  8200.00
+            80 | John       | 14000.00
+            10 | Jennifer   |  4400.00
+            20 | Michael    | 13000.00
+            40 | Susan      |  6500.00
+            70 | Hermann    | 10000.00
+           110 | Shelley    | 12000.00
+(11 rows)
+
+3. WAQ to display emplyees count who are working from same location.
+postgres=# select d.location_id,count(*) from departments d,employees e where d.department_id=e.department_id and d.location_id=d.location_id group by d.location_id;
+ location_id | count
+-------------+-------
+        1800 |     2
+        1500 |    45
+        2500 |    34
+        2400 |     1
+        2700 |     1
+        1700 |    18
+        1400 |     5
+(7 rows)
+
+4. WAQ to display number of employees joined year wise.
+postgres=# select to_char(hire_date,'yyyy') as Year,count(first_name) as Employees from employees group by to_char(hire_date,'yyyy') order by to_char(hire_date,'yyyy') ;
+ year | employees
+------+-----------
+ 1987 |         2
+ 1989 |         1
+ 1990 |         1
+ 1991 |         1
+ 1993 |         1
+ 1994 |         7
+ 1995 |         4
+ 1996 |        10
+ 1997 |        28
+ 1998 |        23
+ 1999 |        18
+ 2000 |        11
+5. WAQ to top 2 earning employee name and salary in each department. 
+postgres=# select first_name,salary from employees order by salary desc limit 2;
+ first_name |  salary
+------------+----------
+ Steven     | 24000.00
+ Neena      | 17000.00
+
+
+
+
+
