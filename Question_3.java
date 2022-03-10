@@ -9,13 +9,19 @@ public class Question_3 {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		Map<String,Integer> contact=new HashMap<>();
-		
-		contact.put("uncle sam", 999912222);
-		contact.put("tom", 1111122222);
-		contact.put("harry", 333312222);
+		Scanner scn = new Scanner(System.in);
+        int n=scn.nextInt();
+        scn.nextLine();
+        for(int i=0;i<n;i++)
+        {
+            String name=scn.nextLine();
+            int phone=scn.nextInt();
+            scn.nextLine();
+            contact.put(name,phone);
+        }
 		while(true)
 		{
-			String search=sc.nextLine();
+			String search=scn.nextLine();
 			if(contact.containsKey(search)==true)
 			{
 				for(Map.Entry<String, Integer> e:contact.entrySet())
